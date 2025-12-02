@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Welcome to AI Legal Assistant</h2>
+    <p>This platform helps you with legal tasks using AI.</p>
+    
+    <h3>Features:</h3>
+    <ul>
+        <li>Contract Review - Analyze contracts for risks</li>
+        <li>Demand Letter Generator - Create professional demand letters</li>
+        <li>Document Analysis - Extract clauses and identify issues</li>
+        <li>Legal Q&A - Ask legal questions</li>
+    </ul>
+    
+    <h3>Ask a Legal Question</h3>
+    <form method="POST" action="{{ url_for('ask') }}">
+        <p><textarea name="question" rows="5" cols="60" placeholder="Enter your legal question..." required></textarea></p>
+        <button type="submit">Ask AI</button>
+    </form>
+    
+    {% if answer %}
+        <hr>
+        <h3>Answer:</h3>
+        <pre>{{ answer }}</pre>
+    {% endif %}
+{% endblock %}

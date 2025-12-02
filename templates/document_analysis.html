@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Document Analysis</h2>
+    <p>Extract clauses and identify risks in legal documents.</p>
+    
+    <form method="POST">
+        <p><textarea name="document_text" rows="15" cols="80" placeholder="Paste document text here..." required></textarea></p>
+        <button type="submit">Analyze Document</button>
+    </form>
+    
+    {% if analysis %}
+        <hr>
+        <h3>Analysis:</h3>
+        <pre>{{ analysis }}</pre>
+    {% endif %}
+{% endblock %}

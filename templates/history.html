@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Your Document History</h2>
+    
+    {% if documents %}
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Preview</th>
+                <th>Action</th>
+            </tr>
+            {% for doc in documents %}
+            <tr>
+                <td>{{ doc.type }}</td>
+                <td>{{ doc.date }}</td>
+                <td>{{ doc.preview }}</td>
+                <td><a href="{{ url_for('view_document', doc_id=doc.doc_id) }}">View</a> | <a href="{{ url_for('delete_document', doc_id=doc.doc_id) }}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No documents yet. Start using the tools above!</p>
+    {% endif %}
+{% endblock %}

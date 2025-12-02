@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Demand Letter Generator</h2>
+    
+    <form method="POST">
+        <p>Your Name: <input type="text" name="sender_name" size="50" required></p>
+        <p>Recipient Name: <input type="text" name="recipient_name" size="50" required></p>
+        <p>Issue Description:</p>
+        <p><textarea name="issue" rows="5" cols="60" required></textarea></p>
+        <p>Your Demand:</p>
+        <p><textarea name="demand" rows="3" cols="60" required></textarea></p>
+        <p>Deadline: <input type="text" name="deadline" value="14 days" size="20"></p>
+        <button type="submit">Generate Letter</button>
+    </form>
+    
+    {% if letter %}
+        <hr>
+        <h3>Generated Demand Letter:</h3>
+        <pre>{{ letter }}</pre>
+    {% endif %}
+{% endblock %}

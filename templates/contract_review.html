@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Contract Review</h2>
+    <p>Paste your contract text below for automated analysis.</p>
+    
+    <form method="POST">
+        <p><textarea name="contract_text" rows="15" cols="80" placeholder="Paste contract text here..." required></textarea></p>
+        <button type="submit">Analyze Contract</button>
+    </form>
+    
+    {% if analysis %}
+        <hr>
+        <h3>Analysis:</h3>
+        <pre>{{ analysis }}</pre>
+    {% endif %}
+    
+    <hr>
+    <h3>Review Checklist:</h3>
+    <ul>
+        <li>Review all identified clauses</li>
+        <li>Address high-risk items</li>
+        <li>Check for missing standard clauses</li>
+        <li>Consult attorney for concerns</li>
+    </ul>
+{% endblock %}

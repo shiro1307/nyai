@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Legal Assistant</title>
+</head>
+<body>
+    <h1>AI Legal Assistant</h1>
+    {% if session.get('user_id') %}
+        <p>Welcome, {{ session.get('username') }}! | <a href="{{ url_for('logout') }}">Logout</a></p>
+        <hr>
+        <a href="{{ url_for('home') }}">Home</a> | 
+        <a href="{{ url_for('contract_review') }}">Contract Review</a> | 
+        <a href="{{ url_for('demand_letter') }}">Demand Letter</a> | 
+        <a href="{{ url_for('document_analysis') }}">Document Analysis</a> |
+        <a href="{{ url_for('history') }}">History</a>
+        <hr>
+    {% endif %}
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p><strong>{{ message }}</strong></p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    {% block content %}{% endblock %}
+</body>
+</html>

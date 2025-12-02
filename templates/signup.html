@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head><title>Sign Up</title></head>
-<body>
-    <h2>Sign Up</h2>
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Login</h2>
     <form method="POST">
-        <input type="text" name="username" placeholder="Username" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <button type="submit">Sign Up</button>
+        <p>Username: <input type="text" name="username" required></p>
+        <p>Password: <input type="password" name="password" required></p>
+        <button type="submit">Login</button>
     </form>
-    <p>Already have an account? <a href="/login">Login</a></p>
-</body>
-</html>
+    <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
+{% endblock %}

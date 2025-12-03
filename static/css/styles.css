@@ -1,19 +1,424 @@
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: left;
-    background-color: rgb(206, 206, 206);
-    color: rgb(33, 33, 33);
+/* =========================================
+   1. GLOBAL RESET & FONTS
+   ========================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-table{
-    border-collapse: collapse;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-td{
-    padding: 15px;
-}
-
-th{
+/* =========================================
+   2. NAVIGATION BAR (Fixed Alignment)
+   ========================================= */
+.navbar {
     background-color: navy;
     color: white;
+    height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    width: 100%;
+    /* FIX: Removes the 1000px limit so logo goes to the far left edge */
+    max-width: 100%; 
+    padding: 0 30px; /* Adds breathing room from the screen edge */
+    display: flex;
+    justify-content: space-between; /* Pushes Logo Left and Links Right */
+    align-items: center;
+}
+
+/* Brand Area (Logo + Text) */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    gap: 15px; /* Space between logo and text */
+}
+
+/* Logo Image Sizing */
+.nav-logo {
+    height: 80px; /* Fits perfectly in the 70px bar */
+    width: auto;
+    display: block;
+}
+
+/* Brand Name Text */
+.brand-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.nav-user {
+    color: #ffd700; /* Gold color for username */
+    font-weight: bold;
+}
+
+/* Sign Up Button in Nav */
+.btn-nav {
+    background-color: white;
+    color: navy !important;
+    padding: 6px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none !important;
+    transition: background-color 0.3s;
+}
+
+.btn-nav:hover {
+    background-color: #f0f0f0;
+}
+
+/* =========================================
+   3. MAIN LAYOUT & CONTAINERS
+   ========================================= */
+.main-content {
+    flex: 1; /* Pushes footer to bottom */
+    width: 100%;
+}
+
+/* Standard Container for Dashboard/Content pages */
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+h1, h2, h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   4. LOGIN & SIGNUP PAGES (The Card Fix)
+   ========================================= */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Centers vertically on screen */
+    padding: 20px;
+}
+
+.card {
+    background-color: white;
+    width: 100%;
+    max-width: 450px; /* FIX: Prevents form from stretching too wide */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* =========================================
+   5. FORMS & INPUTS
+   ========================================= */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: navy;
+    outline: none;
+}
+
+/* =========================================
+   6. BUTTONS
+   ========================================= */
+button, .btn {
+    display: inline-block;
+    background-color: navy;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+button:hover, .btn:hover {
+    background-color: #000050;
+}
+
+/* Full width button for Login/Signup forms */
+button[type="submit"] {
+    width: 100%;
+}
+
+/* =========================================
+   7. TABLES (For History/Dashboard)
+   ========================================= */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    background: white;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background-color: navy;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* =========================================
+   8. ALERTS & FOOTER
+   ========================================= */
+.alert-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: auto; /* Pushes footer to bottom */
+    background-color: #e9e9e9;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   HOME PAGE FULL SCREEN STYLES
+   ========================================= */
+
+/* Common wrapper to keep text readable in the middle of the screen */
+.section-content {
+    max-width: 1100px; /* Wide, but not too wide */
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+/* --- 1. Hero Section (Navy Blue) --- */
+.hero-section {
+    width: 100%;
+    background-color: navy; /* Matches your branding */
+    color: white;
+    padding: 80px 0; /* Tall area for impact */
+    margin-top: -1px; /* Fixes tiny gap if any */
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: white; /* Override default dark heading color */
+}
+
+.hero-section .lead {
+    font-size: 1.3rem;
+    opacity: 0.9;
+}
+
+/* --- 2. Features Section (White) --- */
+.features-section {
+    width: 100%;
+    background-color: white;
+    padding: 60px 0;
+    color: #333;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.feature-box {
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.feature-box:hover {
+    transform: translateY(-5px); /* Gentle lift effect */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.feature-box h4 {
+    color: navy;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* --- 3. Interaction Section (Light Gray) --- */
+.interaction-section {
+    width: 100%;
+    background-color: #f4f4f9; /* Same as body bg for smooth flow */
+    padding: 60px 0;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* The Ask Form */
+.ask-form {
+    max-width: 700px;
+    margin: 30px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ask-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+/* Special Button for Home */
+.hero-btn {
+    align-self: center;
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    background-color: navy;
+    color: white;
+    border-radius: 30px; /* Pill shape */
+}
+
+.hero-btn:hover {
+    background-color: #000050;
+}
+
+/* Answer Box styling for full page */
+.answer-box-full {
+    max-width: 800px;
+    margin: 40px auto 0;
+    text-align: left;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-left: 5px solid navy;
+}
+
+.answer-box-full pre {
+    white-space: pre-wrap;
+    font-family: inherit;
+    color: #333;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+pre strong {
+    font-weight: bold;
+}
+
+pre em {
+    font-style: italic;
 }

@@ -1,26 +1,56 @@
 {% extends "base.html" %}
 
+{% block title %}Home - AI Legal Assistant{% endblock %}
+
 {% block content %}
-    <h2>Welcome to AI Legal Assistant</h2>
-    <p>This platform helps you with legal tasks using AI.</p>
-    
-    <h3>Features:</h3>
-    <ul>
-        <li>Contract Review - Analyze contracts for risks</li>
-        <li>Demand Letter Generator - Create professional demand letters</li>
-        <li>Document Analysis - Extract clauses and identify issues</li>
-        <li>Legal Q&A - Ask legal questions</li>
-    </ul>
-    
-    <h3>Ask a Legal Question</h3>
-    <form method="POST" action="{{ url_for('ask') }}">
-        <p><textarea name="question" rows="5" cols="60" placeholder="Enter your legal question..." required></textarea></p>
-        <button type="submit">Ask AI</button>
-    </form>
-    
-    {% if answer %}
-        <hr>
-        <h3>Answer:</h3>
-        <pre>{{ answer }}</pre>
-    {% endif %}
+
+<section class="hero-section">
+    <div class="section-content">
+        <h1>Welcome to AI Legal Assistant</h1>
+        <p class="lead">Your intelligent partner for Contract Review, Demand Letters, and Legal Analysis.</p>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="section-content">
+        <h3>What We Do</h3>
+        <div class="features-grid">
+            <div class="feature-box">
+                <h4>Contract Review</h4>
+                <p>Analyze contracts instantly for hidden risks and compliance issues.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Demand Letters</h4>
+                <p>Generate professional, legally sound demand letters in seconds.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Document Analysis</h4>
+                <p>Extract crucial clauses and identify potential legal pitfalls.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Legal Q&A</h4>
+                <p>Get instant answers to your complex legal questions using AI.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="interaction-section">
+    <div class="section-content">
+        <h3>Ask a Legal Question</h3>
+        
+        <form method="POST" action="{{ url_for('ask') }}" class="ask-form">
+            <textarea name="question" rows="4" placeholder="Type your legal question here..." required></textarea>
+            <button type="submit" class="hero-btn">Ask AI</button>
+        </form>
+
+        {% if answer %}
+            <div class="answer-box-full">
+                <h4>AI Response:</h4>
+                <pre>{{ answer }}</pre>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
 {% endblock %}

@@ -1,11 +1,37 @@
 {% extends "base.html" %}
 
+{% block title %}Login - AI Legal Assistant{% endblock %}
+
 {% block content %}
-    <h2>Login</h2>
-    <form method="POST">
-        <p>Username: <input type="text" name="username" required></p>
-        <p>Password: <input type="password" name="password" required></p>
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
+
+<div class="login-container">
+    
+    <div class="card">
+        
+        <div class="login-header">
+            <h2>Login</h2>
+            <p style="color: #686868;">Please access your account securely.</p>
+        </div>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter Username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter Password" required>
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Login</button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <p>New to the platform? <a href="{{ url_for('signup') }}" style="color: navy; font-weight: bold;">Create an Account</a></p>
+        </div>
+
+    </div>
+</div>
+
 {% endblock %}

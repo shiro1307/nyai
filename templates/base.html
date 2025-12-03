@@ -1,32 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AI Legal Assistant</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI Legal Assistant{% endblock %}</title>
+    
+    <!-- Link to the CSS file -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>AI Legal Assistant</h1>
-    {% if session.get('user_id') %}
-        <p>Welcome, {{ session.get('username') }}! | <a href="{{ url_for('logout') }}">Logout</a></p>
-        <hr>
 
-        <a href="{{ url_for('home') }}">Home</a> | 
-        <a href="{{ url_for('contract_review') }}">Contract Review</a> | 
-        <a href="{{ url_for('demand_letter') }}">Demand Letter</a> | 
-        <a href="{{ url_for('document_analysis') }}">Document Analysis</a> |
-        <a href="{{ url_for('history') }}">History</a>
+    <!-- PROFESSIONAL NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Brand Logo -->
+            <a href="{{ url_for('home') }}" class="nav-brand">
+                <img src="{{ url_for('static', filename='css/logo.png') }}" alt="Logo" class="nav-logo">
+                <span class="brand-text">AI Legal Assistant</span>
+            </a>
 
-        <hr>
-    {% endif %}
+            <!-- Navigation Links -->
+            <div class="nav-links">
+                {% if session.get('user_id') %}
+                    <a href="{{ url_for('home') }}">Home</a>
+                    <a href="{{ url_for('contract_review') }}">Review</a>
+                    <a href="{{ url_for('demand_letter') }}">Letters</a>
+                    <a href="{{ url_for('document_analysis') }}">Analysis</a>
+                    <a href="{{ url_for('history') }}">History</a>
+                    
+                    <!-- Divider and User Info -->
+                    <span style="opacity: 0.5;">|</span>
+                    <span class="nav-user">{{ session.get('username') }}</span>
+                    <a href="{{ url_for('logout') }}" style="color: #ffcccc; font-size: 0.9rem;">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('signup') }}" class="btn" style="width: auto; padding: 5px 15px; background-color: white; color: navy;">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-content">
+        
+        <!-- Flash Messages (Notifications) -->
+        <div class="alert-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <!-- If category is not provided, default to 'info' -->
+                        <div class="alert alert-{{ category if category else 'info' }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Content Block -->
+        {% block content %}{% endblock %}
     
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <p><strong>{{ message }}</strong></p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    
-    {% block content %}{% endblock %}
+    </main>
+
+    <!-- SIMPLE FOOTER -->
+    <footer>
+        &copy; 2024 AI Legal Assistant. All Rights Reserved.
+    </footer>
+
+    <script>
+    // Run after page loads
+    window.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('pre').forEach(function(preTag) {
+            const markdownText = preTag.textContent;
+            preTag.innerHTML = marked.parse(markdownText);
+        });
+    });
+    </script>
+
 </body>
 </html>

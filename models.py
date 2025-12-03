@@ -70,7 +70,5 @@ def get_document(doc_id, user_id):
     return docs[0] if docs else None
 
 def delete_document(doc_id, user_id):
-    """Delete a document"""
     Doc = Query()
-    documents_table.remove(
-        (Doc.doc_id == doc_id) & (
+    documents_table.remove((Doc.doc_id == doc_id) & (Doc.user_id == user_id))

@@ -19,6 +19,10 @@ def register_auth_routes(app):
             password = request.form.get('password')
             confirm = request.form.get('confirm_password')
             
+            if not username or not password:
+                flash('Username and password are required')
+                return render_template('signup.html')
+            
             if password != confirm:
                 flash('Passwords do not match')
                 return render_template('signup.html')
@@ -38,15 +42,21 @@ def register_auth_routes(app):
             username = request.form.get('username')
             password = request.form.get('password')
             
+            if not username or not password:
+                flash('Username and password are required')
+                return render_template('login.html')
+            
             user = database.get_user(username)
             
             if user and database.verify_password(user, password):
+                # Use TinyDB's doc_id as the user_id
                 session['user_id'] = user.doc_id
                 session['username'] = username
                 flash('Login successful!')
                 return redirect(url_for('home'))
             else:
                 flash('Invalid username or password')
+                return render_template('login.html')
         
         return render_template('login.html')
 

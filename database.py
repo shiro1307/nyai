@@ -78,7 +78,21 @@ def get_document(doc_id, user_id):
     user_db = _get_user_db(user_id)
     documents_table = user_db.table('documents')
     Doc = Query()
-    docs = documents_table.search(Doc.doc_id == doc_id)
+    
+    # Debug: print what we're looking for
+    print(f"[DEBUG] Looking for doc_id: {doc_id} (type: {type(doc_id)})")
+    print(f"[DEBUG] For user_id: {user_id}")
+    
+    # Get all docs to see what's there
+    all_docs = documents_table.all()
+    print(f"[DEBUG] Total documents in DB: {len(all_docs)}")
+    if all_docs:
+        print(f"[DEBUG] Sample doc_id from DB: {all_docs[0].get('doc_id')} (type: {type(all_docs[0].get('doc_id'))})")
+    
+    # Search for the document
+    docs = documents_table.search(Doc.doc_id == str(doc_id))
+    print(f"[DEBUG] Found documents: {len(docs)}")
+    
     user_db.close()
     return docs[0] if docs else None
 
@@ -87,5 +101,18 @@ def delete_document(doc_id, user_id):
     user_db = _get_user_db(user_id)
     documents_table = user_db.table('documents')
     Doc = Query()
-    documents_table.remove(Doc.doc_id == doc_id)
+    
+    # Debug before deletion
+    print(f"[DEBUG DELETE] Attempting to delete doc_id: {doc_id} (type: {type(doc_id)})")
+    docs_before = len(documents_table.all())
+    print(f"[DEBUG DELETE] Documents before deletion: {docs_before}")
+    
+    # Remove by doc_id field (string timestamp), not TinyDB's internal doc_id
+    removed = documents_table.remove(Doc.doc_id == str(doc_id))
+    
+    docs_after = len(documents_table.all())
+    print(f"[DEBUG DELETE] Documents after deletion: {docs_after}")
+    print(f"[DEBUG DELETE] Removed count: {len(removed) if removed else 0}")
+    
     user_db.close()
+    return len(removed) > 0 if removed else False

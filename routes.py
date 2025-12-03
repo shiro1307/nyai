@@ -89,6 +89,9 @@ Document:
     @app.route('/view/<doc_id>')
     @login_required
     def view_document(doc_id):
+        print(f"[ROUTE DEBUG] Received doc_id: {doc_id}")
+        print(f"[ROUTE DEBUG] Session user_id: {session.get('user_id')}")
+        
         document = database.get_document(doc_id, session['user_id'])
         if document:
             return render_template('view_document.html', document=document)
@@ -99,6 +102,10 @@ Document:
     @app.route('/delete/<doc_id>')
     @login_required
     def delete_document(doc_id):
-        database.delete_document(doc_id, session['user_id'])
-        flash('Document deleted')
+        print(f"[ROUTE DEBUG] Deleting doc_id: {doc_id}")
+        success = database.delete_document(doc_id, session['user_id'])
+        if success:
+            flash('Document deleted successfully')
+        else:
+            flash('Document not found or already deleted')
         return redirect(url_for('history'))

@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import config
 import os
+import ai_service
 
 # Ensure data directories exist
 os.makedirs(os.path.dirname(config.USERS_DATABASE), exist_ok=True)
@@ -47,9 +48,14 @@ def _get_user_db(user_id):
     return TinyDB(db_path)
 
 def save_document(user_id, doc_type, input_text, output_text):
-    """Save document to user-specific database"""
+    """Save document to user-specific database with risk scoring"""
     user_db = _get_user_db(user_id)
     documents_table = user_db.table('documents')
+    
+    # Calculate risk score for relevant document types
+    risk_score = None
+    if doc_type in ['Contract Review', 'Document Analysis', 'Document Comparison']:
+        risk_score = ai_service.get_risk_score(input_text)
     
     doc = {
         'doc_id': str(datetime.now().timestamp()),
@@ -58,6 +64,7 @@ def save_document(user_id, doc_type, input_text, output_text):
         'date': datetime.now().strftime('%Y-%m-%d %H:%M'),
         'input': input_text,
         'output': output_text,
+        'risk_score': risk_score,
         'preview': input_text[:50] + '...' if len(input_text) > 50 else input_text
     }
     documents_table.insert(doc)

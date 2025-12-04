@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Document Comparison Tool</h2>
+    <p>Compare two contracts or documents side-by-side to identify key differences.</p>
+    
+    <form method="POST">
+        <div class="form-group">
+            <label for="document1">Document 1:</label>
+            <textarea name="document1" id="document1" rows="10" placeholder="Paste first document here..." required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="document2">Document 2:</label>
+            <textarea name="document2" id="document2" rows="10" placeholder="Paste second document here..." required></textarea>
+        </div>
+        
+        <button type="submit">Compare Documents</button>
+    </form>
+    
+    {% if comparison %}
+        <hr>
+        <h3>Comparison Analysis:</h3>
+        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; border-left: 5px solid navy;">
+            <pre>{{ comparison }}</pre>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
